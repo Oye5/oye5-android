@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="green">#23cf34</color>
+    <color name="red">#FF0000</color>
+    <color name="dark_orange">#E47833</color>
+    <color name="lite_blue">#4E78A0</color>
+    <color name="blue">#0000FF</color>
+    <color name="gray">#FF909090</color>
+    <color name="dark_gray">#585858</color>
+    <color name="light_gray">#FFa8a8a8</color>
+    <color name="orange">#FFf5911f</color>
+    <color name="overlay_normal">#33000000</color>
+    <color name="overlay_semi_light">#22000000</color>
+    <color name="overlay_light">#18000000</color>
+    <color name="white_trans">#55ffffff</color>
+    <color name="white_light_trans">#33ffffff</color>
+
+    <color name="colorPrimary">#FF3dbcd5</color>
+    <color name="colorPrimaryDark">#FF168fa7</color>
+
+    <color name="gray_color1">#FF333333</color>
+    <color name="gray_color2">#FF555555</color>
+    <color name="gray_color3">#FF666666</color>
+    <color name="gray_color4">#FF999999</color>
+    <color name="gray_color5">#FFa8a8a8</color>
+    <color name="gray_color6">#FFbbbbbb</color>
+    <color name="gray_color7">#FFc8c8c8</color>
+    <color name="gray_color8">#FFdddddd</color>
+    <color name="gray_color9">#FFe3e3e3</color>
+    <color name="gray_color10">#FFf3f3f3</color>
+    <color name="gray_color11">#FFf6f5f5</color>
+    <color name="gray_color12">#FFfafbff</color>
+
+    <color name="blue_color1">#FF3b5999</color>
+    <color name="blue_color2">#FF29437a</color>
+
+    <color name="red_color1">#FFd80101</color>
+    <color name="red_color2">#FFb90101</color>
+</resources>
