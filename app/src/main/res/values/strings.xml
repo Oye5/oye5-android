@@ -14,4 +14,19 @@
     <string name="signin_password_show">Show</string>
     <string name="signin_password_hidden">Hide</string>
 
+    <string name="menu_title_buy">Buy</string>
+    <string name="menu_title_categories">Categories</string>
+    <string name="menu_title_sell">Sell</string>
+    <string name="menu_title_chat">Chat</string>
+    <string name="menu_title_profile">Profile</string>
+
+    <string name="press_back_again">Press back button again to exit.</string>
+
+    <string-array name="user_products_type_ary">
+        <item>BUYING</item>
+        <item>SELLING</item>
+        <item>SOLD</item>
+        <item>FAVORITES</item>
+    </string-array>
+
 </resources>

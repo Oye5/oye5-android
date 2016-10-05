@@ -1,5 +1,6 @@
 package com.android.oye5.activities;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,12 @@ public class SignupActivity extends AppCompatActivity {
         } else {
             currentFragment = getSupportFragmentManager().findFragmentByTag("signup");
         }
+    }
+
+    public void goToMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

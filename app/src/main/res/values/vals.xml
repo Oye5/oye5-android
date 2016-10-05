@@ -1,0 +1,5 @@
+<resources>
+	<!--
+	<item name="grid_col_count" format="integer" type="dimen">3</item> -->
+	<integer name="profile_product_grid_col_count">2</integer>
+</resources>

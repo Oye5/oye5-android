@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.oye5.R;
+import com.android.oye5.activities.SignupActivity;
 import com.android.oye5.utils.Utils;
 
 public class SignupFragment extends BaseFragment implements View.OnClickListener{
@@ -112,7 +113,7 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                 showToast("Contact Us", Toast.LENGTH_SHORT);
                 break;
             case R.id.btnFacebookSignIn:
-                showToast("Facebook Signin", Toast.LENGTH_SHORT);
+                ((SignupActivity) getActivity()).goToMainActivity();
                 break;
             case R.id.btnEmailSignin:
                 showSigninEmailPopup();

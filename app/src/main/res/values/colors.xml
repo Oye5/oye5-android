@@ -36,7 +36,13 @@
 
     <color name="blue_color1">#FF3b5999</color>
     <color name="blue_color2">#FF29437a</color>
+    <color name="blue_color3">#FF3dbcd5</color>
+    <color name="blue_color4">#FF26a1b9</color>
 
     <color name="red_color1">#FFd80101</color>
     <color name="red_color2">#FFb90101</color>
+
+    <color name="gray_menu_color">#FF777777</color>
+
+    <color name="green_color1">#FF50e3c2</color>
 </resources>
