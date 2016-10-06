@@ -1,12 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Categories" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary">
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/bg_search_round"
+            android:gravity="center_vertical"
+            android:hint="@string/search_in_location"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHint="@color/gray_color8"
+            android:textSize="@dimen/sp_14" />
+
+        <com.android.oye5.libs.ClickEffectImageView
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_5"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_search" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_1" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_2" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_3" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_4" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_5" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_6" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_1" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_2" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_3" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_4" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_5" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnCategory12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/img_category_sample_6" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

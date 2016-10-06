@@ -1,12 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_color10">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Buy" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
 
-</RelativeLayout>
+        <com.android.oye5.libs.ClickEffectImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_location"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_weight="1"
+            android:layout_marginLeft="-5dp">
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/bg_search_round"
+                android:gravity="center_vertical"
+                android:hint="@string/search_in_location"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="@dimen/dp_10"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_color8"
+                android:textSize="@dimen/sp_14" />
+
+            <com.android.oye5.libs.ClickEffectImageView
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/ic_search" />
+        </RelativeLayout>
+
+        <com.android.oye5.libs.ClickEffectImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_filter"
+            android:padding="@dimen/dp_10"/>
+    </LinearLayout>
+
+    <com.etsy.android.grid.StaggeredGridView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/grdProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:item_margin="@dimen/dp_8"
+        app:column_count="@integer/profile_product_grid_col_count" />
+</LinearLayout>

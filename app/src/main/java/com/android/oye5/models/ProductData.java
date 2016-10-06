@@ -6,6 +6,8 @@ public class ProductData implements Serializable {
     private String name = "";
     private int price = 0;
     private int favorites = 0;
+    private int distance = 0;
+    private int imgResId = 0;
 
     public ProductData() {
     }
@@ -32,5 +34,21 @@ public class ProductData implements Serializable {
 
     public void setFavorites(int favorites) {
         this.favorites = favorites;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public int getImgResId() {
+        return imgResId;
+    }
+
+    public void setImgResId(int imgResId) {
+        this.imgResId = imgResId;
     }
 }
