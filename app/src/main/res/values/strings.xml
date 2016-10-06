@@ -48,5 +48,8 @@
 
     <string name="search_in_location">Search in Location</string>
 
+    <string name="make_an_offer">Make an offer</string>
     <string name="message">Message</string>
+
+    <string name="similar_items">Similar Items</string>
 </resources>

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.oye5.R;
+import com.android.oye5.activities.BaseActivity;
+import com.android.oye5.activities.MainActivity;
 import com.android.oye5.adapters.BuyProductsGridAdapter;
 import com.android.oye5.listeners.FragmentLifecycleListener;
 import com.android.oye5.listeners.PageSelectedListener;
@@ -113,10 +115,16 @@ public class TabBuyFragment extends BaseFragment implements View.OnClickListener
         Log.d(getClass().getName(), "OnPageSelected");
     }
 
+    private void goToProductDetails(View view){
+        ProductData data = (ProductData) view.getTag();
+        ((BaseActivity) getActivity()).goToProductDetailsScreen();
+    }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.layoutProductItem:
+                goToProductDetails(view);
                 break;
         }
     }

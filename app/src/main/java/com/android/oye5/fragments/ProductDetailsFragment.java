@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.oye5.R;
+import com.android.oye5.activities.BaseActivity;
+import com.android.oye5.activities.MainActivity;
 import com.android.oye5.adapters.BuyProductsGridAdapter;
 import com.android.oye5.listeners.FragmentLifecycleListener;
 import com.android.oye5.listeners.PageSelectedListener;
@@ -20,15 +23,20 @@ import java.util.List;
 /**
  * Buy tab fragment that has several fragments by it's child fragment manager
  */
-public class ProductDetailsFragment extends BaseFragment implements View.OnClickListener, PageSelectedListener {
+public class ProductDetailsFragment extends BaseFragment implements View.OnClickListener {
 
     private StaggeredGridView grdProducts;
     private BuyProductsGridAdapter grdAdapter;
     private List<ProductData> dataList = new ArrayList<>();
 
+    public static ProductDetailsFragment newInstance(){
+        ProductDetailsFragment fragment = new ProductDetailsFragment();
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View parent = inflater.inflate(R.layout.fragment_tab_buy, container, false);
+        View parent = inflater.inflate(R.layout.fragment_product_details, container, false);
 
         initView(parent, inflater);
         loadData();
@@ -38,8 +46,17 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
 
     private void initView(View parent, LayoutInflater inflater){
         grdProducts = (StaggeredGridView) parent.findViewById(R.id.grdProducts);
+        View headerView = inflater.inflate(R.layout.view_product_details_header, null);
+        grdProducts.addHeaderView(headerView);
+
         grdAdapter = new BuyProductsGridAdapter(getActivity(), inflater, this);
         grdProducts.setAdapter(grdAdapter);
+
+        headerView.findViewById(R.id.btnBack).setOnClickListener(this);
+        headerView.findViewById(R.id.btnShare).setOnClickListener(this);
+        headerView.findViewById(R.id.btnMenu).setOnClickListener(this);
+        headerView.findViewById(R.id.btnMakeOffer).setOnClickListener(this);
+        headerView.findViewById(R.id.btnMessage).setOnClickListener(this);
     }
 
     private void loadData(){
@@ -71,52 +88,36 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
         dataList.add(data2);
         dataList.add(data3);
         dataList.add(data4);
-        dataList.add(data1);
-        dataList.add(data2);
-        dataList.add(data3);
-        dataList.add(data4);
-        dataList.add(data1);
-        dataList.add(data2);
-        dataList.add(data3);
-        dataList.add(data4);
 
         grdAdapter.setData(dataList);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (getParentFragment() instanceof FragmentLifecycleListener) {
-            ((FragmentLifecycleListener) getParentFragment()).onFragmentAttached(0, this);
-        }
-
-        if (getActivity() instanceof FragmentLifecycleListener) {
-            ((FragmentLifecycleListener) getActivity()).onFragmentAttached(0, this);
-        }
+    private void goToProductDetails(View view){
+        ProductData data = (ProductData) view.getTag();
+        ((BaseActivity) getActivity()).goToProductDetailsScreen();
     }
 
-    @Override
-    public void onDetach() {
-        if (getParentFragment() instanceof FragmentLifecycleListener) {
-            ((FragmentLifecycleListener) getParentFragment()).onFragmentDetached(0);
-        }
-
-        if (getActivity() instanceof FragmentLifecycleListener) {
-            ((FragmentLifecycleListener) getActivity()).onFragmentDetached(0);
-        }
-        super.onDetach();
-    }
-
-    @Override
-    public void onPageSelected() {
-        // TODO Auto-generated method stub
-        Log.d(getClass().getName(), "OnPageSelected");
-    }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.layoutProductItem:
+                goToProductDetails(view);
+                break;
+            case R.id.btnMenu:
+                showToast("Menu Clicked!", Toast.LENGTH_SHORT);
+                break;
+            case R.id.btnShare:
+                showToast("Share Clicked!", Toast.LENGTH_SHORT);
+                break;
+            case R.id.btnBack:
+                getActivity().onBackPressed();
+                break;
+            case R.id.btnMakeOffer:
+                showToast("Make Offer", Toast.LENGTH_SHORT);
+                break;
+            case R.id.btnMessage:
+                showToast("Message Offer", Toast.LENGTH_SHORT);
                 break;
         }
     }

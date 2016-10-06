@@ -1,6 +1,7 @@
 package com.android.oye5.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
@@ -117,4 +118,10 @@ public class BaseActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }*/
+
+
+    public void goToProductDetailsScreen(){
+        Intent intent = new Intent(this, ProductDetailActivity.class);
+        startActivity(intent);
+    }
 }
