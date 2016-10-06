@@ -3,6 +3,10 @@
 
     <string name="btn_label_ok">OK</string>
 
+    <string name="chats">Chats</string>
+    <string name="chats_no_list">No chats yet</string>
+    <string name="chats_sell_your_stuff">Sell your stuff</string>
+
     <string name="signup">sign up</string>
     <string name="signup_contact_us">Contact us and More</string>
     <string name="signin">Sign In</string>
@@ -28,5 +32,14 @@
         <item>SOLD</item>
         <item>FAVORITES</item>
     </string-array>
+
+    <string-array name="chats_tab_title_ary">
+        <item>ALL</item>
+        <item>SELLING</item>
+        <item>BUYING</item>
+        <item>BLOCKED USER</item>
+    </string-array>
+
+    <string name="delete">Delete</string>
 
 </resources>

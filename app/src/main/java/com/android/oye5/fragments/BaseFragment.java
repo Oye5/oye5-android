@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.oye5.R;
@@ -90,5 +92,9 @@ public class BaseFragment extends Fragment {
 			return false;
 		}
 		return true;
+	}
+
+	protected void setToolbarTitle(Toolbar toolbar, String title){
+		((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(title);
 	}
 }
