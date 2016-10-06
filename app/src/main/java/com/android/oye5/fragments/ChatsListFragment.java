@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.oye5.R;
+import com.android.oye5.activities.MainActivity;
 import com.android.oye5.adapters.ChatsListAdapter;
 import com.android.oye5.listeners.ICustomCallback;
 import com.android.oye5.models.ChatData;
@@ -67,7 +68,7 @@ public class ChatsListFragment extends BaseFragment implements View.OnClickListe
         lstChats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showToast("Item Clicked", Toast.LENGTH_SHORT);
+                ((MainActivity) getActivity()).goToChatDetailsScreen();
             }
         });
         /*lstChats.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -6,6 +6,10 @@
     <string name="chats">Chats</string>
     <string name="chats_no_list">No chats yet</string>
     <string name="chats_sell_your_stuff">Sell your stuff</string>
+    <string name="chats_interested">I\'m interested</string>
+    <string name="chats_negotiable">Is it negotiable</string>
+    <string name="chats_not_interested">Sorry I\'m not interested</string>
+    <string name="chats_input_hint">Type your message here</string>
 
     <string name="signup">sign up</string>
     <string name="signup_contact_us">Contact us and More</string>

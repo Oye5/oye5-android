@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_chat_detail"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_color11"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8">
+
+        <com.android.oye5.libs.ClickEffectImageView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_back" />
+
+        <com.android.oye5.libs.CircleImageView
+            android:id="@+id/imgUserPhoto"
+            android:layout_width="@dimen/user_photo_list_size"
+            android:layout_height="@dimen/user_photo_list_size"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_sample_user" />
+
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:text="Nicholas Stewart"
+            android:textColor="@color/gray_color1"
+            android:textSize="@dimen/sp_15"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_2"
+                android:text="jbl speaker"
+                android:textColor="@color/gray_color4"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/txtProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_2"
+                android:text="$60"
+                android:textColor="@color/gray_color1"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="@dimen/product_photo_list_size_small"
+            android:layout_height="@dimen/product_photo_list_size_small"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_product_sample" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/lstChatsHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@color/transparent"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15">
+
+            <Button
+                android:id="@+id/btnInterested"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_25"
+                android:background="@drawable/bg_yellow_round_btn"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_5"
+                android:text="@string/chats_interested"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_11" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/bg_yellow_round_btn"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_5"
+                android:text="@string/chats_negotiable"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_11"
+                android:id="@+id/btnNegotiable"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_25"
+                android:background="@drawable/bg_yellow_round_btn"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_5"
+                android:text="@string/chats_not_interested"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_11"
+                android:id="@+id/btnNotInterested"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFeff3f6"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_30"
+            android:layout_weight="1"
+            android:background="@drawable/bg_type_chat_rectangle"
+            android:gravity="center_vertical"
+            android:hint="@string/chats_input_hint"
+            android:imeOptions="actionSend"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:singleLine="true"
+            android:textColor="@color/gray_color1"
+            android:textSize="@dimen/sp_14"
+            android:id="@+id/edtMessage"/>
+
+        <com.android.oye5.libs.ClickEffectImageView
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:src="@drawable/ic_message_send" />
+    </LinearLayout>
+</LinearLayout>

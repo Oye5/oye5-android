@@ -1,10 +1,9 @@
 package com.android.oye5.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -13,10 +12,8 @@ import android.widget.Toast;
 
 import com.android.oye5.R;
 import com.android.oye5.adapters.MainPagerAdapter;
-import com.android.oye5.fragments.SignupFragment;
 import com.android.oye5.globals.GlobalConstant;
 import com.android.oye5.listeners.FragmentLifecycleListener;
-import com.android.oye5.listeners.OnBackPressedListener;
 import com.android.oye5.listeners.PageSelectedListener;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, FragmentLifecycleListener {
@@ -158,6 +155,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             showToast(getString(R.string.press_back_again), Toast.LENGTH_SHORT);
             mPrevBackPressed = System.currentTimeMillis();
         }
+    }
+
+    public void goToChatDetailsScreen(){
+        Intent intent = new Intent(this, ChatDetailActivity.class);
+        startActivity(intent);
     }
 
     @Override
