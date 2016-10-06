@@ -47,4 +47,6 @@
     <string name="delete">Delete</string>
 
     <string name="search_in_location">Search in Location</string>
+
+    <string name="message">Message</string>
 </resources>

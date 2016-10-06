@@ -29,4 +29,10 @@
         <item name="android:textColor">@color/gray_color1</item>
     </style>
 
+    <style name="GrayButtonStyle" parent="AppTheme">
+        <item name="colorControlActivated">@color/gray_color7</item>
+        <item name="colorControlHighlight">@color/gray_color5</item>
+        <item name="colorButtonNormal">@color/gray_color7</item>
+    </style>
+
 </resources>
