@@ -124,4 +124,9 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ProductDetailActivity.class);
         startActivity(intent);
     }
+
+    public void goToFilterScreen(){
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
+    }
 }

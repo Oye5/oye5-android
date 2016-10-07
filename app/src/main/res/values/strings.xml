@@ -52,4 +52,28 @@
     <string name="message">Message</string>
 
     <string name="similar_items">Similar Items</string>
+
+    <string name="filters">Filters</string>
+    <string name="reset">Reset</string>
+
+    <string name="distance">Distance:</string>
+    <string name="sort_by">Sort By:</string>
+    <string name="newest_first">Newest First</string>
+    <string name="price_low_to_high">Price low to high</string>
+    <string name="price_high_to_low">Price high to low</string>
+
+    <string name="price_filter">Price Filter:</string>
+    <string name="min_price">Min.Price</string>
+    <string name="max_price">Max.Price</string>
+
+    <string name="categories">Categories:</string>
+    <string name="cat_electronics">Electronics</string>
+    <string name="cat_sports">Sports &amp; Leisure</string>
+    <string name="cat_fashion">Fashion &amp; Accessories</string>
+    <string name="cat_cars">Cars &amp; Motors</string>
+    <string name="cat_home">Home &amp; Garden</string>
+    <string name="cat_baby">Baby &amp; Child</string>
+    <string name="cat_books">Books, Movies &amp; Music</string>
+    <string name="cat_other">Other</string>
+
 </resources>

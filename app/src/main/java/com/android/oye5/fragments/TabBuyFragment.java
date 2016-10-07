@@ -42,6 +42,8 @@ public class TabBuyFragment extends BaseFragment implements View.OnClickListener
         grdProducts = (StaggeredGridView) parent.findViewById(R.id.grdProducts);
         grdAdapter = new BuyProductsGridAdapter(getActivity(), inflater, this);
         grdProducts.setAdapter(grdAdapter);
+
+        parent.findViewById(R.id.btnFilter).setOnClickListener(this);
     }
 
     private void loadData(){
@@ -125,6 +127,9 @@ public class TabBuyFragment extends BaseFragment implements View.OnClickListener
         switch(view.getId()){
             case R.id.layoutProductItem:
                 goToProductDetails(view);
+                break;
+            case R.id.btnFilter:
+                ((BaseActivity) getActivity()).goToFilterScreen();
                 break;
         }
     }
