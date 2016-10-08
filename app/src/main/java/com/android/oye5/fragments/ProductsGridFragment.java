@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.android.oye5.R;
+import com.android.oye5.activities.BaseActivity;
 import com.android.oye5.adapters.ProfileProductsGridAdapter;
 import com.android.oye5.models.ProductData;
 
@@ -55,7 +56,7 @@ public class ProductsGridFragment extends BaseFragment implements View.OnClickLi
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                showToast("Item Clicked!", Toast.LENGTH_SHORT);
+                ((BaseActivity) getActivity()).goToProductDetailsScreen();
             }
         });
     }

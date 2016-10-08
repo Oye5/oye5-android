@@ -360,7 +360,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sort_by"
+                    android:text="@string/categories"
                     android:textColor="@color/gray_color1"
                     android:textSize="@dimen/sp_15"
                     android:textStyle="bold" />
@@ -392,7 +392,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_electronics"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -403,7 +403,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_fashion"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -415,7 +415,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_home"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -427,7 +427,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_books"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>
 
@@ -446,7 +446,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_sports"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -457,7 +457,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_cars"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -469,7 +469,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_baby"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                         <CheckBox
                             android:layout_width="wrap_content"
@@ -481,7 +481,7 @@
                             android:paddingLeft="@dimen/dp_10"
                             android:text="@string/cat_other"
                             android:textColor="@color/gray_color1"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>
                 </LinearLayout>

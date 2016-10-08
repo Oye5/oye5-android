@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.oye5.R;
 import com.android.oye5.dialogs.CustomProgressDialog;
+import com.android.oye5.models.ProductData;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -129,4 +131,10 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FilterActivity.class);
         startActivity(intent);
     }
+
+    public void goToProductPostScreen(){
+        Intent intent = new Intent(this, ProductPostActivity.class);
+        startActivity(intent);
+    }
+
 }

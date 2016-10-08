@@ -76,4 +76,35 @@
     <string name="cat_books">Books, Movies &amp; Music</string>
     <string name="cat_other">Other</string>
 
+    <string name="new_listing">New Listing</string>
+    <string name="add_photo_video">Add Photo/Video</string>
+    <string name="item_info">Item Info</string>
+
+    <string name="title">Title:</string>
+    <string name="title_hint">Name your product</string>
+    <string name="description">Description:</string>
+    <string name="price">Price:</string>
+    <string name="condition">Condition:</string>
+    <string name="con_new">New</string>
+    <string name="con_new_desc">Product is unused and has no stains or damages</string>
+    <string name="con_like_new">Like New</string>
+    <string name="con_like_new_desc">Product is used and has no stains or damages</string>
+    <string name="con_good">Good</string>
+    <string name="con_good_desc">Item has slight cosmetic damages but is functional</string>
+    <string name="con_okay">Okay</string>
+    <string name="con_okay_desc">Item has notice cosmetic damages but still works</string>
+    <string name="con_non_functional">Non-Functional</string>
+    <string name="con_non_functional_desc">Item is badly damages or may not work</string>
+    <string name="warranty">Warranty:</string>
+    <string name="additional_notes">Additional Notes</string>
+    <string name="additional_details">Additional Details</string>
+    <string name="tags">Tags:</string>
+    <string name="input_tag_name">Input Tag name here</string>
+    <string name="brand">Brand:</string>
+    <string name="social_media">Social Media</string>
+    <string name="post_on_facebook">Post on Facebook</string>
+    <string name="post_on_instagram">Post on Instagram</string>
+    <string name="item_location">Item Location</string>
+    <string name="save_as_draft">Save as a draft</string>
+    <string name="publish">Publish</string>
 </resources>

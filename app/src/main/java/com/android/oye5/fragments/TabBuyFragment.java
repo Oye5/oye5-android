@@ -117,16 +117,11 @@ public class TabBuyFragment extends BaseFragment implements View.OnClickListener
         Log.d(getClass().getName(), "OnPageSelected");
     }
 
-    private void goToProductDetails(View view){
-        ProductData data = (ProductData) view.getTag();
-        ((BaseActivity) getActivity()).goToProductDetailsScreen();
-    }
-
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.layoutProductItem:
-                goToProductDetails(view);
+                ((BaseActivity) getActivity()).goToProductDetailsScreen();
                 break;
             case R.id.btnFilter:
                 ((BaseActivity) getActivity()).goToFilterScreen();

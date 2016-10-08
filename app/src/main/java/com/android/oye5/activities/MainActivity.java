@@ -172,7 +172,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 selectMenu(GlobalConstant.MENU_CATEGORIES, true);
                 break;
             case R.id.btnSell:
-                selectMenu(GlobalConstant.MENU_SELL, true);
+                //selectMenu(GlobalConstant.MENU_SELL, true);
+                goToProductPostScreen();
                 break;
             case R.id.btnChat:
                 selectMenu(GlobalConstant.MENU_CHAT, true);
