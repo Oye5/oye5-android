@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.android.oye5.R;
+import com.android.oye5.fragments.PhotoSelectFragment;
 import com.android.oye5.fragments.ProductDetailsFragment;
 import com.android.oye5.fragments.ProductPostFragment;
 
@@ -24,6 +25,12 @@ public class ProductPostActivity extends BaseActivity{
             currentFragment = getSupportFragmentManager().findFragmentByTag("product_post");
         }
 
+    }
+
+    public void goToPhotoSelectScreen(){
+        currentFragment = PhotoSelectFragment.newInstance();
+        currentFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.fragmentContent, currentFragment, "photo_select").commit();
     }
 
     private void doGoBack(){

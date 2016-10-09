@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.android.oye5.R;
 import com.android.oye5.activities.BaseActivity;
+import com.android.oye5.activities.ProductPostActivity;
 import com.android.oye5.adapters.BuyProductsGridAdapter;
 import com.android.oye5.models.ProductData;
 import com.etsy.android.grid.StaggeredGridView;
@@ -49,11 +50,17 @@ public class ProductPostFragment extends BaseFragment implements View.OnClickLis
             case R.id.btnBack:
                 getActivity().onBackPressed();
                 break;
+            case R.id.btnAddPhoto1:case R.id.btnAddPhoto2:case R.id.btnAddPhoto3:
+                ((ProductPostActivity) getActivity()).goToPhotoSelectScreen();
+                break;
             case R.id.btnReset:
+                showToast("Reset", Toast.LENGTH_SHORT);
                 break;
             case R.id.btnSaveAsDraft:
+                showToast("Save As Draft", Toast.LENGTH_SHORT);
                 break;
             case R.id.btnPublish:
+                showToast("Publish", Toast.LENGTH_SHORT);
                 break;
         }
     }
