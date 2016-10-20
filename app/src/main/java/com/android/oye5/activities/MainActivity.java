@@ -1,7 +1,10 @@
 package com.android.oye5.activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -10,13 +13,31 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.oye5.Oye5App;
 import com.android.oye5.R;
 import com.android.oye5.adapters.MainPagerAdapter;
+import com.android.oye5.dialogs.CustomProgressDialog;
+import com.android.oye5.fragments.TabProfileFragment;
 import com.android.oye5.globals.GlobalConstant;
 import com.android.oye5.listeners.FragmentLifecycleListener;
 import com.android.oye5.listeners.PageSelectedListener;
+import com.android.oye5.listeners.PhotoCropCompleteListener;
+import com.android.oye5.preferences.AppPreference;
+import com.android.oye5.utils.Utils;
+import com.kbeanie.imagechooser.api.ChooserType;
+import com.kbeanie.imagechooser.api.ChosenImage;
+import com.kbeanie.imagechooser.api.ImageChooserListener;
+import com.kbeanie.imagechooser.api.ImageChooserManager;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener, FragmentLifecycleListener {
+import java.io.File;
+
+public class MainActivity extends BaseActivity implements View.OnClickListener, FragmentLifecycleListener, ImageChooserListener {
+
+    private CustomProgressDialog progressDialog;
+
+    public final static int TAKE_GALLERY = 51;
+    public final static int TAKE_CAMERA = 52;
+    public final static int REQ_CODE_CROP = 40;
 
     private LinearLayout layoutBuySelected, layoutCategoriesSelected, layoutSellSelected, layoutChatSelected, layoutProfileSelected;
     private LinearLayout btnBuy, btnCategories, btnSell, btnChat, btnProfile;
@@ -55,6 +76,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         initPager();
 
         selectMenu(GlobalConstant.MENU_PROFILE, true);
+
+        initLocationManager();
     }
 
     private void selectMenu(int nIndex, boolean bPageChange){
@@ -162,6 +185,46 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         startActivity(intent);
     }
 
+    public void doLogout(){
+        AppPreference.clearUserInfo(this);
+        AppPreference.clearToken(this);
+        Oye5App.getInstance().clearUser();
+
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    ImageChooserManager imageChooserManager;
+    public void doChoosePhoto(){
+        try {
+            imageChooserManager = new ImageChooserManager(this, ChooserType.REQUEST_PICK_PICTURE);
+            imageChooserManager.setImageChooserListener(this);
+            imageChooserManager.choose();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+		/*Intent intent = new Intent( Intent.ACTION_PICK ) ;
+		intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE) ;
+		startActivityForResult(intent, TAKE_GALLERY) ;*/
+    }
+
+    public void doTakePhoto(){
+        Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE ) ;
+        File file = new File( GlobalConstant.getCameraTempFilePath()) ;
+        //it.putExtra(MediaStore.EXTRA_OUTPUT, tempPictuePath ) ;
+        it.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        startActivityForResult(it, TAKE_CAMERA);
+    }
+
+    public void goCrop(String path){
+        Intent intent = new Intent(this, CropActivity.class);
+        intent.putExtra("FILE_PATH", path);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivityForResult(intent, REQ_CODE_CROP);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -183,4 +246,59 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
+
+    @Override
+    public void onImageChosen(final ChosenImage chosenImage) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (chosenImage != null) {
+                    // Use the image
+                    // chosenImage.getFilePathOriginal();
+                    // chosenImage.getFileThumbnail();
+                    // chosenImage.getFileThumbnailSmall();
+                    dismissProgressDialog(progressDialog);
+                    goCrop(chosenImage.getFileThumbnail());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onError(final String reason) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast("Can't load the image", Toast.LENGTH_SHORT);
+                dismissProgressDialog(progressDialog);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK) return;
+
+        if (requestCode == TAKE_GALLERY) {
+            Uri imgUri = data.getData();
+            String _strPhotoPath = Utils.getRealPathFromURI(this, imgUri);
+            goCrop(_strPhotoPath);
+        }else if (requestCode == ChooserType.REQUEST_PICK_PICTURE){
+            progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
+            imageChooserManager.submit(requestCode, data);
+        }else if (requestCode == TAKE_CAMERA) {
+            goCrop(GlobalConstant.getCameraTempFilePath());
+        } else if (requestCode == REQ_CODE_CROP) {
+            TabProfileFragment fragment = (TabProfileFragment) getRegisteredFragment(4);
+            //Fragment curFragment = fragment.getCurrentFragment();
+            if (fragment instanceof PhotoCropCompleteListener){
+                ((PhotoCropCompleteListener) fragment).onCropCompleted();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

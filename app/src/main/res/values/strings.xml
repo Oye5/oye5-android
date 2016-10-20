@@ -2,6 +2,7 @@
     <string name="app_name">Oye5</string>
 
     <string name="btn_label_ok">OK</string>
+    <string name="btn_label_cancel">Cancel</string>
 
     <string name="chats">Chats</string>
     <string name="chats_no_list">No chats yet</string>
@@ -12,7 +13,9 @@
     <string name="chats_input_hint">Type your message here</string>
 
     <string name="signup">sign up</string>
+    <string name="signup1">Sign up</string>
     <string name="signup_contact_us">Contact us and More</string>
+    <string name="signup_enter_your_name">USERNAME</string>
     <string name="signin">Sign In</string>
     <string name="signin_with_facebook">sign in with facebook</string>
     <string name="signin_with_email">sign in with email</string>
@@ -111,4 +114,24 @@
     <string name="use_photo">Use Photo</string>
     <string name="gallery">Gallery</string>
     <string name="photo">Photo</string>
+
+    <string name="please_wait">Please wait…</string>
+    <string name="server_connection_error">Server connection error!</string>
+
+    <string name="valid_enter_email">Please input valid email!</string>
+    <string name="valid_enter_username">Please input username!</string>
+    <string name="valid_enter_password">Please input password!</string>
+
+    <string name="gps_enable_title">Enable GPS</string>
+    <string name="gps_enable_confirm">App requires your location. Would you like to enable GPS?</string>
+
+    <string name="menu_profile_change_photo">Change Photo</string>
+    <string name="menu_profile_logout">Logout</string>
+
+    <string name="logout">Logout</string>
+    <string name="logout_desc">Are you sure you want to log out?</string>
+
+    <string name="photo_crop">Photo Crop</string>
+    <string name="choose_from_gallery">Choose from Gallery</string>
+    <string name="take_a_photo">Take a Photo</string>
 </resources>

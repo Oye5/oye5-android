@@ -40,6 +40,7 @@
     <dimen name="sp_30">30sp</dimen>
 
     <dimen name="signin_email_popup_height">240dp</dimen>
+    <dimen name="signup_email_popup_height">290dp</dimen>
 
     <dimen name="user_photo_list_size">40dp</dimen>
     <dimen name="product_photo_list_size">70dp</dimen>

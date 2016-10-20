@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="PATH_USER_SIGNUP">userservice/user/signup</string>
+	<string name="PATH_USER_SIGNIN">userservice/user/signin</string>
+	<string name="PATH_USER_INFO">userservice/v1/get/user/</string>
+	<string name="PATH_USER_UPDATE">userservice/v1/updateUser/</string>
+</resources>

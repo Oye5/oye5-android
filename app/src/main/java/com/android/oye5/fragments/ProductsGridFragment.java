@@ -22,6 +22,12 @@ import java.util.List;
  */
 public class ProductsGridFragment extends BaseFragment implements View.OnClickListener{
 
+    public static final int TYPE_BUYING = 1;
+    public static final int TYPE_SELLING = 2;
+    public static final int TYPE_SOLD = 3;
+    public static final int TYPE_FAVORITES = 4;
+
+
     private GridView gridView;
     private ProfileProductsGridAdapter gridAdapter;
 

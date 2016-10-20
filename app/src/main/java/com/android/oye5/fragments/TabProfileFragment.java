@@ -1,29 +1,61 @@
 package com.android.oye5.fragments;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.oye5.Oye5App;
 import com.android.oye5.R;
+import com.android.oye5.activities.MainActivity;
+import com.android.oye5.activities.SignupActivity;
 import com.android.oye5.adapters.ProfileProductsFragmentAdapter;
+import com.android.oye5.dialogs.CustomProgressDialog;
+import com.android.oye5.globals.GlobalConstant;
 import com.android.oye5.listeners.FragmentLifecycleListener;
 import com.android.oye5.listeners.PageSelectedListener;
+import com.android.oye5.listeners.PhotoCropCompleteListener;
+import com.android.oye5.models.UserData;
+import com.android.oye5.preferences.AppPreference;
+import com.android.oye5.utils.RestClientUtils;
+import com.android.oye5.utils.Utils;
+import com.bumptech.glide.Glide;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Profile tab fragment that has several fragments by it's child fragment manager
  */
-public class TabProfileFragment extends BaseFragment implements PageSelectedListener, View.OnClickListener {
+public class TabProfileFragment extends BaseFragment implements PageSelectedListener, View.OnClickListener, PhotoCropCompleteListener {
+
+    private CustomProgressDialog progressDialog;
 
     private ImageView imgProfile;
     private TextView txtName;
@@ -34,9 +66,13 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
     private ViewPager pager;
     private ProfileProductsFragmentAdapter pagerAdapter;
 
+    private UserData user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.fragment_tab_profile, container, false);
+
+        user = Oye5App.getInstance().getUser(false);
 
         initView(parent);
         updateUIs();
@@ -58,6 +94,7 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
         initSmartTabs(parent);
 
         parent.findViewById(R.id.btnSettings).setOnClickListener(this);
+        parent.findViewById(R.id.btnLogout).setOnClickListener(this);
         parent.findViewById(R.id.btnModify).setOnClickListener(this);
     }
 
@@ -98,9 +135,34 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
     }
 
     private void updateUIs(){
-        txtName.setText("Alex Hong");
+        txtName.setText(user.getName());
         txtAddress.setText("SAN FRANCISCO, CALIFORNIA");
-        txtLikedCount.setText("(999)");
+        txtLikedCount.setText(user.getUserRating() + "");
+
+        int nStarCount = (int)user.getUserRating();
+
+        layoutStars.removeAllViews();
+        for (int i = 0; i < 5; i++){
+            ImageView imgStar = new ImageView(getActivity());
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dp_5);
+            imgStar.setLayoutParams(params);
+
+            if (i < nStarCount){
+                imgStar.setImageResource(R.drawable.ic_star_selected);
+            }else{
+                imgStar.setImageResource(R.drawable.ic_star_normal);
+            }
+
+            layoutStars.addView(imgStar);
+        }
+
+        Glide.with(getActivity())
+                .load(user.getProfilePicURL())
+                .placeholder(R.drawable.bg_loader_default)
+                .error(R.drawable.bg_loader_default)
+                .into(imgProfile);
     }
 
     public void changeTabsTitleTypeFace(LinearLayout ly, int position) {
@@ -112,14 +174,152 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
         }
     }
 
+
+
+    /*private void doOpenMenu(View v){
+        PopupMenu popup = new PopupMenu(getActivity(), v);
+        popup.inflate(R.menu.menu_profile);
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.action_photo:
+                        showToast("Photo", Toast.LENGTH_SHORT);
+                        break;
+                    case R.id.action_logout:
+                        showToast("Logout", Toast.LENGTH_SHORT);
+                        break;
+                }
+                return false;
+            }
+        });
+        popup.show();
+    }*/
+
+    private void doLogout(){
+        final AlertDialog dlg = new AlertDialog.Builder(getActivity(), R.style.AlertDialogCustom)
+                .setTitle(R.string.logout)
+                .setMessage(R.string.logout_desc)
+                .setPositiveButton(R.string.btn_label_ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                ((MainActivity) getActivity()).doLogout();
+                            }
+                        })
+                .setNegativeButton(R.string.btn_label_cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        }).create();
+        dlg.show();
+    }
+
+    /** Select user photo to be added from either Gallery or Camera **/
+    private void selectPhoto(){
+        String lblFromGallery = getString(R.string.choose_from_gallery);
+        String lblTakePhoto = getString(R.string.take_a_photo);
+
+        String items[] = {
+                lblFromGallery,
+                lblTakePhoto};
+
+        AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+        dlg.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    ((MainActivity) getActivity()).doChoosePhoto();
+                } else if (which == 1) {
+                    ((MainActivity) getActivity()).doTakePhoto();
+                }
+            }
+        });
+        dlg.show();
+    }
+
+    @Override
+    public void onCropCompleted() {
+        //goToAddPhotoFragment();
+        Log.d(getClass().getName(), "Cropped");
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                imgProfile.setImageBitmap(Utils.getSafeDecodeBitmap(GlobalConstant.getCropTempFilePath(), 0));
+                doUpdateUser();
+            }
+        });
+    }
+
+    private void doUpdateUser(){
+        try {
+
+            List<Map<String, Object>> listOfMaps = new ArrayList<Map<String, Object>>();
+            /*Map<String, Object> user1 = new HashMap<String, Object>();
+            user1.put("key", "image");
+            user1.put("value", new File(GlobalConstant.getCropTempFilePath()));
+            user1.put("type", "file");
+            user1.put("enabled", true);*/
+            Map<String, Object> user1 = new HashMap<String, Object>();
+            user1.put("key", "firstName");
+            user1.put("value", "FirstName");
+            user1.put("type", "text");
+            user1.put("enabled", true);
+
+            Map<String, Object> user2 = new HashMap<String, Object>();
+            user2.put("key", "lastName");
+            user2.put("value", "LastName");
+            user2.put("type", "text");
+            user2.put("enabled", true);
+
+            listOfMaps.add(user1);
+            listOfMaps.add(user2);
+
+            RequestParams params = new RequestParams();
+            params.put("data", listOfMaps);
+
+            progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
+            RestClientUtils.post(getActivity(), getString(R.string.PATH_USER_UPDATE) + user.getId(), params, true, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.i(getClass().getName(), "Update User response:" + response.toString());
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, java.lang.String responseString, java.lang.Throwable throwable) {
+                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response1:" + responseString);
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject obj) {
+                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response2:" + obj);
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+        }catch(Exception e){}
+    }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.btnSettings:
-                showToast("Settings", Toast.LENGTH_SHORT);
+                selectPhoto();
                 break;
             case R.id.btnModify:
                 showToast("Modify", Toast.LENGTH_SHORT);
+                break;
+            case R.id.btnLogout:
+                doLogout();
                 break;
         }
     }

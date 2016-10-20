@@ -29,23 +29,27 @@
         android:paddingTop="@dimen/dp_15"
         android:text="@string/signup_contact_us"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/sp_14"
+        android:visibility="invisible" />
 
     <ImageView
+        android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:paddingBottom="@dimen/dp_150"
+        android:paddingBottom="@dimen/dp_100"
         android:src="@drawable/img_main_logo" />
 
     <LinearLayout
+        android:id="@+id/layoutButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_50"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp_30"
-        android:paddingRight="@dimen/dp_30">
+        android:paddingRight="@dimen/dp_30"
+        android:visibility="invisible">
 
         <Button
             android:id="@+id/btnFacebookSignIn"
@@ -174,4 +178,115 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSignupPopup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/signup_email_popup_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_marginBottom="-290dp">
+
+        <RelativeLayout
+            android:id="@+id/btnCloseSignupPopup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_overlay_btn"
+            android:padding="@dimen/dp_5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup1"
+                android:textColor="@color/gray_color2"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:id="@+id/edtSignupEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:hint="@string/signin_enter_your_email"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@+id/edtPassword"
+                android:singleLine="true"
+                android:textColor="@color/gray_color2"
+                android:textColorHint="@color/gray_color7"
+                android:textSize="@dimen/sp_14" />
+
+            <EditText
+                android:id="@+id/edtSignupUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:hint="@string/signup_enter_your_name"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@+id/edtPassword"
+                android:singleLine="true"
+                android:textColor="@color/gray_color2"
+                android:textColorHint="@color/gray_color7"
+                android:textSize="@dimen/sp_14" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtSignupPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:hint="@string/signin_password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/gray_color2"
+                    android:textColorHint="@color/gray_color7"
+                    android:textSize="@dimen/sp_14" />
+
+                <Button
+                    android:id="@+id/btnSignupShowPassword"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_25"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_grey_round_btn"
+                    android:text="@string/signin_password_show"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnEmailSignup"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_35"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_25"
+                android:background="@drawable/bg_blue_round_btn"
+                android:text="@string/signup1"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -440,5 +442,60 @@ public class Utils {
 	public static final String getDeviceID(Context ctx){
 		//return Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
         return "1234";
+	}
+
+	private static final int ONE_MINUTES = 1000 * 60 * 1;
+
+	/**
+	 * To check which of current locations got by GPS and Network is best.
+	 * @param location : last location
+	 * @param currentBestLocation
+	 * @return
+	 */
+	public static boolean isBetterLocation(Location location, Location currentBestLocation) {
+		if (currentBestLocation == null) {
+			return true;
+		}
+
+		long timeDelta = location.getTime() - currentBestLocation.getTime();
+		boolean isSignificantlyNewer = timeDelta > ONE_MINUTES;
+		boolean isSignificantlyOlder = timeDelta < -ONE_MINUTES;
+		boolean isNewer = timeDelta > 0;
+
+		if (isSignificantlyNewer) {
+			return true;
+		} else if (isSignificantlyOlder) {
+			return false;
+		}
+
+		int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
+		boolean isLessAccurate = accuracyDelta > 0;
+		boolean isMoreAccurate = accuracyDelta < 0;
+		boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+
+		boolean isFromSameProvider = isSameProvider(location.getProvider(),
+				currentBestLocation.getProvider());
+
+		if (isMoreAccurate) {
+			return true;
+		} else if (isNewer && !isLessAccurate) {
+			return true;
+		} else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+			return true;
+		}
+		return false;
+	}
+
+	private static boolean isSameProvider(String provider1, String provider2) {
+		if (provider1 == null) {
+			return provider2 == null;
+		}
+		return provider1.equals(provider2);
+	}
+
+	public static boolean CheckGPSOpen(Context mContext)
+	{
+		LocationManager locationManager = (LocationManager) mContext.getSystemService(mContext.LOCATION_SERVICE);
+		return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 }

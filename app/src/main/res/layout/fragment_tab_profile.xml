@@ -19,6 +19,21 @@
             android:id="@+id/btnSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/btnLogout"
+            android:background="@drawable/bg_overlay_btn"
+            android:padding="@dimen/dp_10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/bg_overlay_btn"
@@ -27,7 +42,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_log_out" />
         </RelativeLayout>
 
         <LinearLayout
@@ -58,7 +73,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_overlay_btn"
-                    android:padding="@dimen/dp_5">
+                    android:padding="@dimen/dp_5"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -72,16 +88,17 @@
                 android:id="@+id/txtAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_5"
                 android:text="SAN FRANCISCO, CALIFORNIA"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -96,7 +113,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dp_5"
-                        android:src="@drawable/ic_star_selected" />
+                        android:src="@drawable/ic_star_selected"
+                        />
 
                     <ImageView
                         android:layout_width="wrap_content"

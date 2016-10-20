@@ -6,6 +6,11 @@ import android.content.SharedPreferences;
 
 public class AppPreference {
 	public static final String SHARED_PREF_KEY = "com.android.oye5";
+	private static final String PREF_KEY_TOKEN = "key_user_token";
+    private static final String PREF_KEY_USERID = "key_user_id";
+	private static final String PREF_KEY_USERINFO = "key_user_info";
+	private static final String KEY_LATITUDE = "key_latitude";
+	private static final String KEY_LONGITUDE = "key_longitude";
 
 	public static SharedPreferences getPreferences(Context ctx) {
 		return ctx.getSharedPreferences(SHARED_PREF_KEY, Activity.MODE_PRIVATE);
@@ -84,4 +89,53 @@ public class AppPreference {
 		editor.remove(key);
 		editor.commit();
 	}
+
+	public static void setToken(Context ctx, String token){
+		setSharedPrefValue(ctx, PREF_KEY_TOKEN, token);
+	}
+
+	public static String getToken(Context ctx){
+		return getStringPrefValue(ctx, PREF_KEY_TOKEN);
+	}
+
+    public static void setUserId(Context ctx, String userid){
+        setSharedPrefValue(ctx, PREF_KEY_USERID, userid);
+    }
+
+    public static String getUserId(Context ctx){
+        return getStringPrefValue(ctx, PREF_KEY_USERID);
+    }
+
+	public static void setUserInfo(Context ctx, String userInfo){
+		setSharedPrefValue(ctx, PREF_KEY_USERINFO, userInfo);
+	}
+
+	public static String getUserInfo(Context ctx){
+		return getStringPrefValue(ctx, PREF_KEY_USERINFO);
+	}
+
+	public static void clearUserInfo(Context ctx){
+		clearPrefValue(ctx, PREF_KEY_USERINFO);
+	}
+
+    public static void clearToken(Context ctx){
+        clearPrefValue(ctx, PREF_KEY_TOKEN);
+    }
+
+    public static void clearUserId(Context ctx){
+        clearPrefValue(ctx, PREF_KEY_USERID);
+    }
+
+    public static void setLocation(Context ctx, double lat, double lng) {
+        setSharedPrefValue(ctx, KEY_LATITUDE, (float) lat);
+        setSharedPrefValue(ctx, KEY_LONGITUDE, (float) lng);
+    }
+
+    public static double getLatitude(Context ctx) {
+        return (double) getFloatPrefValue(ctx, KEY_LATITUDE);
+    }
+
+    public static double getLongitude(Context ctx) {
+        return (double) getFloatPrefValue(ctx, KEY_LONGITUDE);
+    }
 }

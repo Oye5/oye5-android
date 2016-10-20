@@ -10,8 +10,10 @@ import android.view.MenuItem;
 
 import com.android.oye5.R;
 import com.android.oye5.fragments.SignupFragment;
+import com.android.oye5.globals.GlobalConstant;
+import com.android.oye5.utils.Utils;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends BaseActivity {
 
     private Fragment currentFragment = null;
 
@@ -26,12 +28,21 @@ public class SignupActivity extends AppCompatActivity {
         } else {
             currentFragment = getSupportFragmentManager().findFragmentByTag("signup");
         }
+
+        InitStorage();
+    }
+
+    /** Initializing local storage folder **/
+    private void InitStorage() {
+        Utils.CreateWorkDirectories(GlobalConstant.getHomeDirPath(), false);
+        Utils.CreateWorkDirectories(GlobalConstant.getTempDirpath(), false);
     }
 
     public void goToMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.appear_from_right, R.anim.disappear_to_left);
     }
 
     @Override

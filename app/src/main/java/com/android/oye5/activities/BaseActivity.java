@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
@@ -12,9 +13,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.oye5.Oye5App;
 import com.android.oye5.R;
 import com.android.oye5.dialogs.CustomProgressDialog;
 import com.android.oye5.models.ProductData;
+import com.android.oye5.utils.Utils;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -135,6 +138,32 @@ public class BaseActivity extends AppCompatActivity {
     public void goToProductPostScreen(){
         Intent intent = new Intent(this, ProductPostActivity.class);
         startActivity(intent);
+    }
+
+    public void initLocationManager() {
+        // Check GPS is enabled or not.
+        if (!Utils.CheckGPSOpen(this)) {
+            final AlertDialog dlg = new AlertDialog.Builder(this, R.style.AlertDialogCustom)
+                    .setTitle(R.string.gps_enable_title)
+                    .setMessage(R.string.gps_enable_confirm)
+                    .setPositiveButton(R.string.btn_label_ok,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivity(intent);
+                                    dialog.dismiss();
+                                }
+                            })
+                    .setNegativeButton(R.string.btn_label_cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).create();
+            dlg.show();
+        }
+
+        Oye5App.getInstance().getMyLocation().setLocationListners();
     }
 
 }
