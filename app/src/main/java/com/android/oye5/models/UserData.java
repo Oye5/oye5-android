@@ -1,5 +1,7 @@
 package com.android.oye5.models;
 
+import com.android.oye5.globals.GlobalConstant;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -139,6 +141,8 @@ public class UserData implements Serializable {
                 this.setName(jsonObject.getString("userName"));
             }else if (jsonObject.has("user_name") && !jsonObject.isNull("user_name")){
                 this.setName(jsonObject.getString("user_name"));
+            }else if (jsonObject.has("name") && !jsonObject.isNull("name")){
+                this.setName(jsonObject.getString("name"));
             }
             if (jsonObject.has("userId") && !jsonObject.isNull("userId")){
                 this.setId(jsonObject.getString("userId"));
@@ -191,5 +195,11 @@ public class UserData implements Serializable {
         }
 
         return dataList;
+    }
+
+    public String getProfilePicFullURL(){
+        String hostName = "https://s3-us-west-2.amazonaws.com/oye5/user/";
+        hostName = GlobalConstant.isDebug? ("http://mypmpnow.com/api.php/" + hostName):hostName;
+        return hostName + getProfilePicURL();
     }
 }

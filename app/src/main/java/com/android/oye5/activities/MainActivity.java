@@ -24,6 +24,7 @@ import com.android.oye5.listeners.PageSelectedListener;
 import com.android.oye5.listeners.PhotoCropCompleteListener;
 import com.android.oye5.preferences.AppPreference;
 import com.android.oye5.utils.Utils;
+import com.facebook.login.LoginManager;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
@@ -185,9 +186,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         startActivity(intent);
     }
 
+    public void goToProductByCategoryScreen(int categoryId){
+        Intent intent = new Intent(this, ProductByCategoryActivity.class);
+        intent.putExtra("category_id", categoryId);
+        startActivity(intent);
+    }
+
     public void doLogout(){
-        AppPreference.clearUserInfo(this);
-        AppPreference.clearToken(this);
+        LoginManager loginManager = LoginManager.getInstance();
+        if (loginManager != null){
+            loginManager.logOut();
+        }
+
         Oye5App.getInstance().clearUser();
 
         Intent intent = new Intent(this, SignupActivity.class);
@@ -278,8 +288,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode != Activity.RESULT_OK) return;
 
         if (requestCode == TAKE_GALLERY) {
@@ -298,6 +306,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ((PhotoCropCompleteListener) fragment).onCropCompleted();
             }
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 

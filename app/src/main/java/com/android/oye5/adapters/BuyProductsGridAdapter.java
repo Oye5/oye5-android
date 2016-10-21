@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.oye5.R;
 import com.android.oye5.models.ProductData;
+import com.bumptech.glide.Glide;
 import com.etsy.android.grid.util.DynamicHeightImageView;
 
 import java.util.ArrayList;
@@ -104,15 +105,23 @@ public class BuyProductsGridAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        double positionHeight = getPositionRatio(position);
-        holder.imgPhoto.setHeightRatio(positionHeight);
+
 
         ProductData data = dataList.get(position);
 
-        holder.imgPhoto.setImageResource(data.getImgResId());
-        holder.txtName.setText(data.getName());
-        holder.txtDistance.setText(data.getDistance() + "km");
-        holder.txtPrice.setText("$" + data.getPrice());
+        double positionHeight = getPositionRatio(position);
+        //double positionHeight = data.getThumb().getHeight() / data.getThumb().getWidth();
+        holder.imgPhoto.setHeightRatio(positionHeight);
+
+        Glide.with(ctx)
+                .load(data.getThumb().getUrl())
+                .placeholder(R.drawable.bg_loader_default)
+                .error(R.drawable.bg_loader_default)
+                .into(holder.imgPhoto);
+
+        holder.txtName.setText(data.getDisplayName());
+        holder.txtDistance.setText(data.getGeoData().getDistance() + "km");
+        holder.txtPrice.setText(data.getCurrency() + data.getPrice());
 
         holder.layoutProductItem.setTag(data);
         holder.layoutProductItem.setOnClickListener(mClickListener);

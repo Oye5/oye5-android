@@ -125,8 +125,9 @@ public class BaseActivity extends AppCompatActivity {
     }*/
 
 
-    public void goToProductDetailsScreen(){
+    public void goToProductDetailsScreen(ProductData product){
         Intent intent = new Intent(this, ProductDetailActivity.class);
+        intent.putExtra("product", product);
         startActivity(intent);
     }
 
@@ -166,4 +167,86 @@ public class BaseActivity extends AppCompatActivity {
         Oye5App.getInstance().getMyLocation().setLocationListners();
     }
 
+    /*private Context context;
+    private GoogleCloudMessaging gcm;
+    private String regid = "";
+    public void checkGCMRegistration(){
+        context = getApplicationContext();
+        if( checkPlayServices() ){
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regid = getRegistrationId(context);
+
+            if (regid.equals("")) {
+                registerInBackground();
+            } else {
+                Log.i(getClass().getName(), "Registration is found:" + regid);
+            }
+        }
+    }
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(getClass().getName(), "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Gets the current registration ID for application on GCM service.
+     * <p>
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     *         registration ID.
+     */
+    /*private String getRegistrationId(Context context) {
+        String registrationId = AppPreference.getGCMRegId(context);
+        if (registrationId.equals("")) {
+            Log.i(getClass().getName(), "Registration not found.");
+            return "";
+        }
+
+        return registrationId;
+    }*/
+
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     * <p>
+     * Stores the registration ID and app versionCode in the application's
+     * shared preferences.
+     */
+    /*private void registerInBackground() {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(context);
+                    }
+                    regid = gcm.register(GlobalConstant.SENDER_ID);
+                    return regid;
+                } catch (IOException ex) {
+                    Log.e(getClass().getName(), "IOException:" + ex.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String id) {
+                if( id != null ) {
+                    AppPreference.setGCMRegId(context, id);
+                }
+            }
+        }.execute(null, null, null);
+    }*/
 }

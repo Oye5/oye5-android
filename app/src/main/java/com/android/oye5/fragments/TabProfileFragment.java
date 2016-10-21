@@ -90,6 +90,7 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
         pager = (ViewPager) parent.findViewById(R.id.pager);
         pagerAdapter = new ProfileProductsFragmentAdapter(getChildFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.setOffscreenPageLimit(3);
 
         initSmartTabs(parent);
 
@@ -158,8 +159,9 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
             layoutStars.addView(imgStar);
         }
 
+        Log.d(getClass().getName(), user.getProfilePicFullURL());
         Glide.with(getActivity())
-                .load(user.getProfilePicURL())
+                .load(user.getProfilePicFullURL())
                 .placeholder(R.drawable.bg_loader_default)
                 .error(R.drawable.bg_loader_default)
                 .into(imgProfile);
@@ -173,8 +175,6 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
             if (j == position) tvTabTitle.setTypeface(null, Typeface.BOLD);
         }
     }
-
-
 
     /*private void doOpenMenu(View v){
         PopupMenu popup = new PopupMenu(getActivity(), v);
@@ -226,6 +226,7 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
                 lblTakePhoto};
 
         AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+        dlg.setTitle(R.string.photo_change);
         dlg.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
@@ -240,12 +241,9 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
 
     @Override
     public void onCropCompleted() {
-        //goToAddPhotoFragment();
-        Log.d(getClass().getName(), "Cropped");
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                imgProfile.setImageBitmap(Utils.getSafeDecodeBitmap(GlobalConstant.getCropTempFilePath(), 0));
                 doUpdateUser();
             }
         });
@@ -253,30 +251,10 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
 
     private void doUpdateUser(){
         try {
-
-            List<Map<String, Object>> listOfMaps = new ArrayList<Map<String, Object>>();
-            /*Map<String, Object> user1 = new HashMap<String, Object>();
-            user1.put("key", "image");
-            user1.put("value", new File(GlobalConstant.getCropTempFilePath()));
-            user1.put("type", "file");
-            user1.put("enabled", true);*/
-            Map<String, Object> user1 = new HashMap<String, Object>();
-            user1.put("key", "firstName");
-            user1.put("value", "FirstName");
-            user1.put("type", "text");
-            user1.put("enabled", true);
-
-            Map<String, Object> user2 = new HashMap<String, Object>();
-            user2.put("key", "lastName");
-            user2.put("value", "LastName");
-            user2.put("type", "text");
-            user2.put("enabled", true);
-
-            listOfMaps.add(user1);
-            listOfMaps.add(user2);
-
             RequestParams params = new RequestParams();
-            params.put("data", listOfMaps);
+            //params.put("firstName", user.getFirstName());
+            //params.put("lastName", user.getLastName());
+            params.put("image", new File(GlobalConstant.getCropTempFilePath()));
 
             progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
             RestClientUtils.post(getActivity(), getString(R.string.PATH_USER_UPDATE) + user.getId(), params, true, new JsonHttpResponseHandler() {
@@ -285,6 +263,8 @@ public class TabProfileFragment extends BaseFragment implements PageSelectedList
                     Log.i(getClass().getName(), "Update User response:" + response.toString());
                     if (isActivityActive()) {
                         dismissProgressDialog(progressDialog);
+                        imgProfile.setImageBitmap(Utils.getSafeDecodeBitmap(GlobalConstant.getCropTempFilePath(), 0));
+                        showToast("Updated user successfully!", Toast.LENGTH_SHORT);
                     }
                 }
 

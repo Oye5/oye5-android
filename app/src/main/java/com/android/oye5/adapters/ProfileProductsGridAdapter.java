@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.oye5.R;
 import com.android.oye5.models.ProductData;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -106,9 +107,15 @@ public class ProfileProductsGridAdapter extends BaseAdapter {
 
         ProductData data = dataList.get(position);
 
-        holder.txtName.setText(data.getName());
-        holder.txtFavorites.setText(data.getFavorites() + "");
-        holder.txtPrice.setText("$" + data.getPrice());
+        Glide.with(ctx)
+                .load(data.getThumb().getUrl())
+                .placeholder(R.drawable.bg_loader_default)
+                .error(R.drawable.bg_loader_default)
+                .into(holder.imgPhoto);
+
+        holder.txtName.setText(data.getDisplayName());
+        holder.txtPrice.setText(data.getCurrency() + data.getPrice());
+        holder.txtFavorites.setText(data.getFavoriteCount() + "");
 
         return convertView;
     }

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.oye5.R;
+import com.android.oye5.activities.MainActivity;
 import com.android.oye5.listeners.FragmentLifecycleListener;
 import com.android.oye5.listeners.PageSelectedListener;
 
@@ -17,8 +18,6 @@ import com.android.oye5.listeners.PageSelectedListener;
  * Categories tab fragment that has several fragments by it's child fragment manager
  */
 public class TabCategoriesFragment extends BaseFragment implements View.OnClickListener, PageSelectedListener {
-
-    private EditText edtSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,8 +29,6 @@ public class TabCategoriesFragment extends BaseFragment implements View.OnClickL
     }
 
     private void initView(View parent){
-        edtSearch = (EditText) parent.findViewById(R.id.edtSearch);
-
         parent.findViewById(R.id.btnCategory1).setOnClickListener(this);
         parent.findViewById(R.id.btnCategory2).setOnClickListener(this);
         parent.findViewById(R.id.btnCategory3).setOnClickListener(this);
@@ -40,12 +37,6 @@ public class TabCategoriesFragment extends BaseFragment implements View.OnClickL
         parent.findViewById(R.id.btnCategory6).setOnClickListener(this);
         parent.findViewById(R.id.btnCategory7).setOnClickListener(this);
         parent.findViewById(R.id.btnCategory8).setOnClickListener(this);
-        parent.findViewById(R.id.btnCategory9).setOnClickListener(this);
-        parent.findViewById(R.id.btnCategory10).setOnClickListener(this);
-        parent.findViewById(R.id.btnCategory11).setOnClickListener(this);
-        parent.findViewById(R.id.btnCategory12).setOnClickListener(this);
-
-        parent.findViewById(R.id.btnSearch).setOnClickListener(this);
     }
 
     @Override
@@ -89,14 +80,7 @@ public class TabCategoriesFragment extends BaseFragment implements View.OnClickL
             case R.id.btnCategory6:
             case R.id.btnCategory7:
             case R.id.btnCategory8:
-            case R.id.btnCategory9:
-            case R.id.btnCategory10:
-            case R.id.btnCategory11:
-            case R.id.btnCategory12:
-                showToast("Category Clicked!", Toast.LENGTH_SHORT);
-                break;
-            case R.id.btnSearch:
-                showToast("Search!", Toast.LENGTH_SHORT);
+                ((MainActivity) getActivity()).goToProductByCategoryScreen(Integer.parseInt(view.getTag().toString()));
                 break;
         }
     }

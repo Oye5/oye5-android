@@ -19,15 +19,23 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     //compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile 'com.etsy.android.grid:library:1.0.5'
+    compile 'com.edmodo:cropper:1.0.1'
     compile files('libs/android-async-http-1.4.9.jar')
     compile files('libs/httpclient-4.3.6.jar')
     compile files('libs/glide-3.7.0.jar')
-    compile project(':cropper-2.0.0')
     compile project(':image-chooser-library-1.5.2')
+    compile files('libs/grid-view-with-header-footer-1.0.12.jar')
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
+    compile project(':libOye5IconPageIndicator')
+    compile files('libs/universal-image-loader-1.9.4.jar')
 }

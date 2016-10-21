@@ -9,21 +9,19 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.List;
 
 import cz.msebera.android.httpclient.entity.ByteArrayEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class RestClientUtils {
-	private static final String BASE_URL_USER  = "http://52.89.17.179:8080/";
-	private static final String BASE_URL_PRODUCT  = "http://52.43.30.248:8080/";
-	private static final String BASE_URL_IMAGE  = "http://54.69.168.103:8080/";
-	private static final String BASE_URL_CHAT  = "http://52.39.133.116:8080/";
+	private static final String BASE_URL_USER  = "http://user.oye5.com/"; 			//"http://52.89.17.179:8080/";
+	private static final String BASE_URL_PRODUCT  = "http://product.oye5.com/";		//"http://52.43.30.248:8080/";
+	private static final String BASE_URL_IMAGE  = "http://upload.oye5.com/";		//"http://54.69.168.103:8080/";
+	private static final String BASE_URL_CHAT  = "http://chat.oye5.com/";			//"http://52.39.133.116:8080/";
 
 	private static AsyncHttpClient client = new AsyncHttpClient();
 	static {
@@ -131,7 +129,7 @@ public class RestClientUtils {
 		String serviceUrl = baseURL + url;
 		client.removeHeader("auth");
 		if (needAuth){
-			client.addHeader("auth", AppPreference.getToken(ctx));
+			client.addHeader("auth", Oye5App.getInstance().getToken());
 		}
 		return serviceUrl;
 	}

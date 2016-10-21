@@ -2,27 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/gray_color13">
+    android:background="@color/gray_color13"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
         android:gravity="center_vertical"
-        android:background="@color/colorPrimary">
+        android:orientation="horizontal">
 
         <com.android.oye5.libs.ClickEffectImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            android:src="@drawable/ic_location"/>
+            android:src="@drawable/ic_location"
+            android:visibility="gone"/>
 
+        <!--android:layout_marginLeft="-5dp"-->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="?android:attr/actionBarSize"
-            android:layout_weight="1"
-            android:layout_marginLeft="-5dp">
+            android:layout_weight="1">
 
             <EditText
                 android:id="@+id/edtSearch"
@@ -34,7 +35,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@drawable/bg_search_round"
                 android:gravity="center_vertical"
-                android:hint="@string/search_in_location"
+                android:hint="@string/search"
                 android:imeOptions="actionSearch"
                 android:paddingLeft="@dimen/dp_10"
                 android:singleLine="true"
@@ -53,20 +54,39 @@
         </RelativeLayout>
 
         <com.android.oye5.libs.ClickEffectImageView
+            android:id="@+id/btnFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_filter"
             android:padding="@dimen/dp_10"
-            android:id="@+id/btnFilter"/>
+            android:src="@drawable/ic_filter"
+            android:visibility="gone"/>
     </LinearLayout>
 
-    <com.etsy.android.grid.StaggeredGridView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/grdProducts"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:item_margin="@dimen/dp_8"
-        app:column_count="@integer/profile_product_grid_col_count" />
+        android:layout_weight="1">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.etsy.android.grid.StaggeredGridView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/grdProducts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:column_count="@integer/profile_product_grid_col_count"
+                app:item_margin="@dimen/dp_8" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 </LinearLayout>

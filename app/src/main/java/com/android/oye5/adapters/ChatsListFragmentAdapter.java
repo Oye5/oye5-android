@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.android.oye5.fragments.ChatsListFragment;
-import com.android.oye5.fragments.ProductsGridFragment;
 
 import java.util.ArrayList;
 

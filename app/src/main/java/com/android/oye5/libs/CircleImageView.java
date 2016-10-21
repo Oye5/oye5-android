@@ -25,6 +25,8 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+
 @SuppressLint("WrongCall")
 public class CircleImageView extends ImageView {
 

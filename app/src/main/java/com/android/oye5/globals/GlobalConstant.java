@@ -8,6 +8,10 @@ public class GlobalConstant {
 	/** System Common Constants **/
 	public static final String TAG = "OYE5";
 
+	public static final boolean isDebug = true;
+
+	public static final String SENDER_ID = "100934099222";
+
 	public static final int MENU_BUY = 1;
 	public static final int MENU_CATEGORIES = 2;
 	public static final int MENU_SELL = 3;

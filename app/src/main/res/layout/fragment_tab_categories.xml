@@ -9,6 +9,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorPrimary">
 
+        <!--
         <EditText
             android:id="@+id/edtSearch"
             android:layout_width="match_parent"
@@ -38,6 +39,18 @@
             android:layout_marginRight="@dimen/dp_5"
             android:padding="@dimen/dp_10"
             android:src="@drawable/ic_search" />
+        -->
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/categories1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
     <ScrollView
@@ -55,84 +68,93 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_1" />
+                android:src="@drawable/img_category_sample_1"
+                android:tag="2" />
 
             <com.android.oye5.libs.ClickEffectImageView
                 android:id="@+id/btnCategory2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_2" />
+                android:src="@drawable/img_category_sample_2"
+                android:tag="4" />
 
             <com.android.oye5.libs.ClickEffectImageView
                 android:id="@+id/btnCategory3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_3" />
+                android:src="@drawable/img_category_sample_3"
+                android:tag="1" />
 
             <com.android.oye5.libs.ClickEffectImageView
                 android:id="@+id/btnCategory4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_4" />
+                android:src="@drawable/img_category_sample_4"
+                android:tag="6" />
 
             <com.android.oye5.libs.ClickEffectImageView
                 android:id="@+id/btnCategory5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_5" />
+                android:src="@drawable/img_category_sample_5"
+                android:tag="5" />
 
             <com.android.oye5.libs.ClickEffectImageView
                 android:id="@+id/btnCategory6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_6" />
+                android:src="@drawable/img_category_sample_6"
+                android:tag="3" />
 
-            <com.android.oye5.libs.ClickEffectImageView
-                android:id="@+id/btnCategory7"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_1" />
+                android:layout_height="wrap_content">
 
-            <com.android.oye5.libs.ClickEffectImageView
-                android:id="@+id/btnCategory8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_2" />
+                <com.android.oye5.libs.ClickEffectImageView
+                    android:id="@+id/btnCategory7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_category_baby"
+                    android:tag="7" />
 
-            <com.android.oye5.libs.ClickEffectImageView
-                android:id="@+id/btnCategory9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="BABY &amp; CHILDREN"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <com.android.oye5.libs.ClickEffectImageView
-                android:id="@+id/btnCategory10"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_4" />
+                android:layout_height="wrap_content">
 
-            <com.android.oye5.libs.ClickEffectImageView
-                android:id="@+id/btnCategory11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_5" />
+                <com.android.oye5.libs.ClickEffectImageView
+                    android:id="@+id/btnCategory8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/img_category_other"
+                    android:tag="8" />
 
-            <com.android.oye5.libs.ClickEffectImageView
-                android:id="@+id/btnCategory12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_category_sample_6" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="OTHERS"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

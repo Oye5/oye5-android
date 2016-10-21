@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Oye5</string>
 
+    <string name="facebook_app_id">1155228124524547</string>    <!-- mine -->
+    <!-- <string name="facebook_app_id">184283395325802</string>  -->       <!-- provided -->
+
+    <string name="com_facebook_loginview_log_out_button">Log out</string>
+    <string name="com_facebook_loginview_log_in_button">Sign in with Facebook</string>
+    <string name="com_facebook_loginview_log_in_button_long">Sign in with Facebook</string>
+
     <string name="btn_label_ok">OK</string>
     <string name="btn_label_cancel">Cancel</string>
 
@@ -33,10 +40,10 @@
 
     <string name="press_back_again">Press back button again to exit.</string>
 
+    <!-- <item>SOLD</item> -->
     <string-array name="user_products_type_ary">
         <item>BUYING</item>
         <item>SELLING</item>
-        <item>SOLD</item>
         <item>FAVORITES</item>
     </string-array>
 
@@ -49,6 +56,7 @@
 
     <string name="delete">Delete</string>
 
+    <string name="search">Search products…</string>
     <string name="search_in_location">Search in Location</string>
 
     <string name="make_an_offer">Make an offer</string>
@@ -69,6 +77,8 @@
     <string name="min_price">Min.Price</string>
     <string name="max_price">Max.Price</string>
 
+    <string name="category">Category: %1$s</string>
+    <string name="categories1">Categories</string>
     <string name="categories">Categories:</string>
     <string name="cat_electronics">Electronics</string>
     <string name="cat_sports">Sports &amp; Leisure</string>
@@ -79,6 +89,7 @@
     <string name="cat_books">Books, Movies &amp; Music</string>
     <string name="cat_other">Other</string>
 
+    <string name="added">Added: %1$s</string>
     <string name="new_listing">New Listing</string>
     <string name="add_photo_video">Add Photo/Video</string>
     <string name="item_info">Item Info</string>
@@ -87,7 +98,7 @@
     <string name="title_hint">Name your product</string>
     <string name="description">Description:</string>
     <string name="price">Price:</string>
-    <string name="condition">Condition:</string>
+    <string name="condition">Condition: %1$s</string>
     <string name="con_new">New</string>
     <string name="con_new_desc">Product is unused and has no stains or damages</string>
     <string name="con_like_new">Like New</string>
@@ -134,4 +145,22 @@
     <string name="photo_crop">Photo Crop</string>
     <string name="choose_from_gallery">Choose from Gallery</string>
     <string name="take_a_photo">Take a Photo</string>
+
+    <string name="no_product_found">No products found.</string>
+
+    <string-array name="category_ary">
+        <item>ELECTRONICS</item>
+        <item>CARS &amp; MOTORS</item>
+        <item>SPORTS &amp; LEISURE</item>
+        <item>HOME &amp; GARDEN</item>
+        <item>BOOK, MOVIES &amp; MUSIC</item>
+        <item>FASHION &amp; ACCESSORIES</item>
+        <item>BABY &amp; CHILDREN</item>
+        <item>OTHERS</item>
+    </string-array>
+
+    <string name="photo_change">Photo change</string>
+
+    <string name="favorite_product">Favorite</string>
+    <string name="unfavorite_product">UnFavorite</string>
 </resources>

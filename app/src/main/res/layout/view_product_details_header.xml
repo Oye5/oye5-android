@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gray_color13"
@@ -9,18 +10,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgProduct"
+        <RelativeLayout
+            android:id="@+id/layoutPhoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/img_product_sample_5" />
+            android:background="@drawable/bg_loader_default">
+
+            <android.support.v4.view.ViewPager
+                android:id="@id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:padding="5dp"
+                app:fillColor="@color/colorPrimary"
+                app:pageColor="@color/transparent"
+                app:radius="4dp"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/btnBack"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
             android:background="@drawable/bg_overlay_btn">
 
             <ImageView
@@ -34,7 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/btnShare"
@@ -152,6 +172,18 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingLeft="@dimen/dp_30"
+            android:paddingRight="@dimen/dp_30"
+            android:text="@string/favorite_product"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+
+        <!--
+        <Button
             android:id="@+id/btnMessage"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -162,6 +194,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14"
             android:theme="@style/GrayButtonStyle" />
+        -->
     </LinearLayout>
 
     <View
@@ -259,7 +292,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/dp_15">
+            android:paddingTop="@dimen/dp_15"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -357,7 +391,8 @@
         android:layout_marginBottom="@dimen/dp_15"
         android:text="Pick up in: Mumbai, India"
         android:textColor="@color/gray_color3"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"

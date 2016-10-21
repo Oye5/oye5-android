@@ -58,4 +58,11 @@ public class SignupActivity extends BaseActivity {
             fm.popBackStack();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (currentFragment != null) currentFragment.onActivityResult(requestCode, resultCode, data);
+    }
 }

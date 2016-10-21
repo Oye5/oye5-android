@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.oye5.globals.GlobalConstant;
+
 public class AppPreference {
 	public static final String SHARED_PREF_KEY = "com.android.oye5";
-	private static final String PREF_KEY_TOKEN = "key_user_token";
-    private static final String PREF_KEY_USERID = "key_user_id";
 	private static final String PREF_KEY_USERINFO = "key_user_info";
 	private static final String KEY_LATITUDE = "key_latitude";
 	private static final String KEY_LONGITUDE = "key_longitude";
+	private static final String KEY_GCMID = "key_gcm_id";
 
 	public static SharedPreferences getPreferences(Context ctx) {
 		return ctx.getSharedPreferences(SHARED_PREF_KEY, Activity.MODE_PRIVATE);
@@ -90,22 +91,6 @@ public class AppPreference {
 		editor.commit();
 	}
 
-	public static void setToken(Context ctx, String token){
-		setSharedPrefValue(ctx, PREF_KEY_TOKEN, token);
-	}
-
-	public static String getToken(Context ctx){
-		return getStringPrefValue(ctx, PREF_KEY_TOKEN);
-	}
-
-    public static void setUserId(Context ctx, String userid){
-        setSharedPrefValue(ctx, PREF_KEY_USERID, userid);
-    }
-
-    public static String getUserId(Context ctx){
-        return getStringPrefValue(ctx, PREF_KEY_USERID);
-    }
-
 	public static void setUserInfo(Context ctx, String userInfo){
 		setSharedPrefValue(ctx, PREF_KEY_USERINFO, userInfo);
 	}
@@ -114,17 +99,17 @@ public class AppPreference {
 		return getStringPrefValue(ctx, PREF_KEY_USERINFO);
 	}
 
+	public static void setGcmID(Context ctx, String gcmid){
+		setSharedPrefValue(ctx, KEY_GCMID, gcmid);
+	}
+
+	public static String getGcmID(Context ctx){
+		return getStringPrefValue(ctx, KEY_GCMID);
+	}
+
 	public static void clearUserInfo(Context ctx){
 		clearPrefValue(ctx, PREF_KEY_USERINFO);
 	}
-
-    public static void clearToken(Context ctx){
-        clearPrefValue(ctx, PREF_KEY_TOKEN);
-    }
-
-    public static void clearUserId(Context ctx){
-        clearPrefValue(ctx, PREF_KEY_USERID);
-    }
 
     public static void setLocation(Context ctx, double lat, double lng) {
         setSharedPrefValue(ctx, KEY_LATITUDE, (float) lat);
@@ -132,10 +117,12 @@ public class AppPreference {
     }
 
     public static double getLatitude(Context ctx) {
-        return (double) getFloatPrefValue(ctx, KEY_LATITUDE);
+        //return (double) getFloatPrefValue(ctx, KEY_LATITUDE);
+		return GlobalConstant.isDebug? 79.989:(double) getFloatPrefValue(ctx, KEY_LATITUDE);
     }
 
     public static double getLongitude(Context ctx) {
-        return (double) getFloatPrefValue(ctx, KEY_LONGITUDE);
+        //return (double) getFloatPrefValue(ctx, KEY_LONGITUDE);
+		return GlobalConstant.isDebug? 134.9:(double) getFloatPrefValue(ctx, KEY_LONGITUDE);
     }
 }

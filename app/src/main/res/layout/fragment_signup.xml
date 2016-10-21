@@ -51,6 +51,26 @@
         android:paddingRight="@dimen/dp_30"
         android:visibility="invisible">
 
+        <LinearLayout
+            android:id="@+id/layoutLoginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/btnFBLogin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:background="@drawable/bg_facebook_btn"
+                android:textStyle="normal"
+                android:textAllCaps="true"
+                android:textSize="@dimen/sp_14"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnFacebookSignIn"
             android:layout_width="match_parent"
@@ -58,7 +78,8 @@
             android:background="@drawable/bg_facebook_btn"
             android:text="@string/signin_with_facebook"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btnEmailSignin"

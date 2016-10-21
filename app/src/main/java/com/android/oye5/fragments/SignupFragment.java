@@ -1,8 +1,11 @@
 package com.android.oye5.fragments;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +29,18 @@ import com.android.oye5.models.UserData;
 import com.android.oye5.preferences.AppPreference;
 import com.android.oye5.utils.RestClientUtils;
 import com.android.oye5.utils.Utils;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -50,6 +61,13 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
 
     private ImageView imgLogo;
 
+    /**
+     * Facebook Login button layout, Callback manager
+     **/
+    private CallbackManager callbackManager;
+    private LoginButton btnFBLogin;
+    private LinearLayout layoutLoginBtn;
+
     public static SignupFragment newInstance(){
         SignupFragment fragment = new SignupFragment();
         return fragment;
@@ -58,9 +76,15 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         View parent = inflater.inflate(R.layout.fragment_signup, container, false);
 
         initView(parent);
+        fbLoginConfiguration(parent);
+
         doLogoAnimation();
 
         return parent;
@@ -113,7 +137,7 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void doButtonsAnimation(){
-        if (AppPreference.getToken(getActivity()).equals("")){
+        if (Oye5App.getInstance().getToken().equals("")){
             // Do button animation for login
             AlphaAnimation anim = new AlphaAnimation(0, 1);
             anim.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -252,6 +276,9 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
             JSONObject objParams = new JSONObject();
             objParams.put("email", email);
             objParams.put("password", password);
+            objParams.put("gcmId", AppPreference.getGcmID(getActivity()));
+            objParams.put("lattitude", AppPreference.getLatitude(getActivity()));
+            objParams.put("longitude", AppPreference.getLongitude(getActivity()));
             progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
             RestClientUtils.post(getActivity(), getString(R.string.PATH_USER_SIGNIN), objParams, false, new JsonHttpResponseHandler() {
                 @Override
@@ -263,19 +290,18 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                         String message = response.has("message")? response.optString("message"):"";
 
                         if (message.equals("")) {
-                            AppPreference.setToken(getActivity(), response.optString("providerToken"));
-                            AppPreference.setUserId(getActivity(), response.optString("userId"));
+                            Oye5App.getInstance().setUserInfo(response.toString());
 
                             if (_email.equals("") && _password.equals("")) {
                                 hideSigninEmailPopup();
                                 layoutEmailSigninPopup.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        doGetUserInfo();
+                                        ((SignupActivity) getActivity()).goToMainActivity();
                                     }
                                 }, 300);
                             } else {
-                                doGetUserInfo();
+                                ((SignupActivity) getActivity()).goToMainActivity();
                             }
                         }else{
                             showToast(message, Toast.LENGTH_SHORT);
@@ -331,6 +357,9 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
             objParams.put("email", email);
             objParams.put("username", username);
             objParams.put("password", password);
+            objParams.put("gcmId", AppPreference.getGcmID(getActivity()));
+            objParams.put("lattitude", AppPreference.getLatitude(getActivity()));
+            objParams.put("longitude", AppPreference.getLongitude(getActivity()));
             objParams.put("appType", "android");
             progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
             RestClientUtils.post(getActivity(), getString(R.string.PATH_USER_SIGNUP), objParams, false, new JsonHttpResponseHandler() {
@@ -340,8 +369,8 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                     if (isActivityActive()) {
                         dismissProgressDialog(progressDialog);
 
-                        String code = response.optString("code");
-                        if (code.equals("S001")){
+                        String message = response.optString("message");
+                        if (message.equals("")) {
                             hideSignupEmailPopup();
                             layoutEmailSignupPopup.postDelayed(new Runnable() {
                                 @Override
@@ -349,6 +378,8 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                                     doSignin(email, password);
                                 }
                             }, 300);
+                        } else {
+                            showToast(message, Toast.LENGTH_SHORT);
                         }
                     }
                 }
@@ -370,7 +401,7 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                         //showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
 
                         String code = obj.optString("code");
-                        if (!code.equals("S001")){
+                        if (!code.equals("S001")) {
                             String message = obj.optString("message");
                             showToast(message, Toast.LENGTH_SHORT);
                         }
@@ -382,44 +413,143 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void doGetUserInfo(){
-        if (AppPreference.getUserInfo(getActivity()).equals("")){
-            try {
-                progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
-                RestClientUtils.get(getActivity(), getString(R.string.PATH_USER_INFO) + AppPreference.getUserId(getActivity()), null, false, new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        Log.i(getClass().getName(), "User Info response:" + response.toString());
-                        if (isActivityActive()) {
-                            dismissProgressDialog(progressDialog);
+        try {
+            progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
+            RestClientUtils.get(getActivity(), getString(R.string.PATH_USER_INFO) + Oye5App.getInstance().getUser(false).getId(), null, false, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.i(getClass().getName(), "User Info response:" + response.toString());
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                        try {
+                            response.put("providerToken", Oye5App.getInstance().getToken());
+                        }catch(Exception e){}
+                        Oye5App.getInstance().setUserInfo(response.toString());
+                        ((SignupActivity) getActivity()).goToMainActivity();
+                    }
+                }
 
+                @Override
+                public void onFailure(int statusCode, Header[] headers, java.lang.String responseString, java.lang.Throwable throwable) {
+                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response1:" + responseString);
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
+                        getActivity().finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject obj) {
+                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response2:" + obj);
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
+                        getActivity().finish();
+                    }
+                }
+            });
+        }catch(Exception e){}
+    }
+
+    private void doSigninViaFacebook(String accessToken){
+        try {
+            JSONObject objParams = new JSONObject();
+            objParams.put("fbAuthToken", accessToken);
+            objParams.put("gcmId", AppPreference.getGcmID(getActivity()));
+            objParams.put("lattitude", AppPreference.getLatitude(getActivity()));
+            objParams.put("longitude", AppPreference.getLongitude(getActivity()));
+            progressDialog = showProgressDialog(progressDialog, getString(R.string.please_wait));
+            RestClientUtils.post(getActivity(), getString(R.string.PATH_USER_FB_SIGNIN), objParams, false, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Log.i(getClass().getName(), "Facebook Signin response:" + response.toString());
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+
+                        String message = response.has("message") ? response.optString("message") : "";
+
+                        if (message.equals("")) {
                             Oye5App.getInstance().setUserInfo(response.toString());
                             ((SignupActivity) getActivity()).goToMainActivity();
+                        } else {
+                            showToast(message, Toast.LENGTH_SHORT);
                         }
                     }
+                }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, java.lang.String responseString, java.lang.Throwable throwable) {
-                        Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response1:" + responseString);
-                        if (isActivityActive()) {
-                            dismissProgressDialog(progressDialog);
-                            showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
-                        }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, java.lang.String responseString, java.lang.Throwable throwable) {
+                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response:" + responseString);
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
                     }
+                }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject obj) {
-                        Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response2:" + obj);
-                        if (isActivityActive()) {
-                            dismissProgressDialog(progressDialog);
-                            showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
-                        }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject obj) {
+                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response:" + obj);
+                    if (isActivityActive()) {
+                        dismissProgressDialog(progressDialog);
+
+                        String message = obj.optString("message");
+                        showToast(message, Toast.LENGTH_SHORT);
                     }
-                });
-            }catch(Exception e){}
-        }else{
-            ((SignupActivity) getActivity()).goToMainActivity();
-        }
+                }
+            });
+        }catch (JSONException eJSON){}
+        catch(Exception e){}
     }
+
+    private void fbLoginConfiguration(View parent) {
+        btnFBLogin = (LoginButton) parent.findViewById(R.id.btnFBLogin);
+
+        // Facebook Login Button Appearance Customization
+        float fbIconScale = 1.45F;
+        Drawable drawable = getResources().getDrawable(com.facebook.R.drawable.com_facebook_button_icon);
+        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * fbIconScale), (int) (drawable.getIntrinsicHeight() * fbIconScale));
+        btnFBLogin.setCompoundDrawables(drawable, null, null, null);
+        btnFBLogin.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.fb_margin_override_textpadding));
+        btnFBLogin.setPadding(
+                getResources().getDimensionPixelSize(R.dimen.fb_margin_override_lr),
+                getResources().getDimensionPixelSize(R.dimen.fb_margin_override_top),
+                0,
+                getResources().getDimensionPixelSize(R.dimen.fb_margin_override_bottom));
+        btnFBLogin.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.fb_text_size));
+
+        btnFBLogin.setReadPermissions(Arrays.asList("public_profile", "email"));
+        btnFBLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(final LoginResult loginResult) {
+                doSigninViaFacebook(loginResult.getAccessToken().getToken());
+                //showToast(loginResult.getAccessToken().getToken(), Toast.LENGTH_LONG);
+                /*GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.v(getClass().getName(), "Facebook Profile:" + response.toString());
+                                doSignupByFacebook(response.getJSONObject());
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,first_name,last_name,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();*/
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                exception.printStackTrace();
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -455,5 +585,10 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                 hideSignupEmailPopup();
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
