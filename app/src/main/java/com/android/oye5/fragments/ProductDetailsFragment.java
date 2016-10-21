@@ -177,58 +177,6 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
     }
 
     private void loadData(){
-
-
-        try {
-            if (!swipeRefresh) showProgressBar(true);
-            String url = getString(R.string.PATH_PRODUCT_SERVICE) + "?lattitude=" + AppPreference.getLatitude(getActivity()) + "&longitude=" +
-                    AppPreference.getLongitude(getActivity()) + "&start=0&num_results=100";
-            String query = edtSearch.getText().toString();
-            if (!query.equals("")) url += "&q=" + query;
-            RestClientUtils.get(getActivity(), url, null, false, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                    Log.i(getClass().getName(), "Product List response:" + response.toString());
-                    if (isActivityActive()) {
-                        if (swipeRefresh) swipeRefreshLayout.setRefreshing(false);
-                        if (!swipeRefresh) showProgressBar(false);
-
-                        dataList.clear();
-
-                        if (GlobalConstant.isDebug) {
-                            dataList.addAll(ProductData.buildDataListFromJSONArray(response));
-                            dataList.addAll(ProductData.buildDataListFromJSONArray(response));
-                            dataList.addAll(ProductData.buildDataListFromJSONArray(response));
-                        }
-                        dataList.addAll(ProductData.buildDataListFromJSONArray(response));
-
-                        grdAdapter.setData(dataList);
-
-                        showNotFoundLabel();
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, java.lang.String responseString, java.lang.Throwable throwable) {
-                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response1:" + responseString);
-                    if (isActivityActive()) {
-                        if (swipeRefresh) swipeRefreshLayout.setRefreshing(false);
-                        if (!swipeRefresh) showProgressBar(false);
-                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject obj) {
-                    Log.e(getClass().getName(), "Failed, code:" + statusCode + ", response2:" + obj);
-                    if (isActivityActive()) {
-                        if (swipeRefresh) swipeRefreshLayout.setRefreshing(false);
-                        if (!swipeRefresh) showProgressBar(false);
-                        showToast(getString(R.string.server_connection_error), Toast.LENGTH_SHORT);
-                    }
-                }
-            });
-        }catch(Exception e){}
     }
 
     private void goToProductDetails(View view){
