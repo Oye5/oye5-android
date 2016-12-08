@@ -118,11 +118,11 @@ public class AppPreference {
 
     public static double getLatitude(Context ctx) {
         //return (double) getFloatPrefValue(ctx, KEY_LATITUDE);
-		return GlobalConstant.isDebug? 79.989:(double) getFloatPrefValue(ctx, KEY_LATITUDE);
+		return 1==1? 79.989:(double) getFloatPrefValue(ctx, KEY_LATITUDE);
     }
 
     public static double getLongitude(Context ctx) {
         //return (double) getFloatPrefValue(ctx, KEY_LONGITUDE);
-		return GlobalConstant.isDebug? 134.9:(double) getFloatPrefValue(ctx, KEY_LONGITUDE);
+		return 1==1? 134.9:(double) getFloatPrefValue(ctx, KEY_LONGITUDE);
     }
 }

@@ -148,6 +148,8 @@ public class UserData implements Serializable {
                 this.setId(jsonObject.getString("userId"));
             }else if (jsonObject.has("user_id") && !jsonObject.isNull("user_id")){
                 this.setId(jsonObject.getString("user_id"));
+            }else if (jsonObject.has("id") && !jsonObject.isNull("id")){
+                this.setId(jsonObject.getString("id"));
             }
             if (jsonObject.has("first_name") && !jsonObject.isNull("first_name")){
                 this.setFirstName(jsonObject.getString("first_name"));
@@ -198,7 +200,7 @@ public class UserData implements Serializable {
     }
 
     public String getProfilePicFullURL(){
-        String hostName = "https://s3-us-west-2.amazonaws.com/oye5/user/";
+        String hostName = "http://s3.ap-south-1.amazonaws.com/oye5-mumbai/user/";
         hostName = GlobalConstant.isDebug? ("http://mypmpnow.com/api.php/" + hostName):hostName;
         return hostName + getProfilePicURL();
     }

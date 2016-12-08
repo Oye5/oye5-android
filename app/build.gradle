@@ -38,4 +38,5 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     compile project(':libOye5IconPageIndicator')
     compile files('libs/universal-image-loader-1.9.4.jar')
+    compile 'com.google.android.gms:play-services:7.5.0'
 }

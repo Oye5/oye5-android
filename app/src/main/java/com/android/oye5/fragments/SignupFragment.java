@@ -370,7 +370,8 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                         dismissProgressDialog(progressDialog);
 
                         String message = response.optString("message");
-                        if (message.equals("")) {
+                        //String code = response.optString("code");
+                        if (message.equals("")/*code.equals("S001")*/) {
                             hideSignupEmailPopup();
                             layoutEmailSignupPopup.postDelayed(new Runnable() {
                                 @Override
@@ -380,8 +381,7 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
                             }, 300);
                         } else {
                             showToast(message, Toast.LENGTH_SHORT);
-                        }
-                    }
+                        }}
                 }
 
                 @Override
@@ -504,6 +504,7 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
 
     private void fbLoginConfiguration(View parent) {
         btnFBLogin = (LoginButton) parent.findViewById(R.id.btnFBLogin);
+        btnFBLogin.setFragment(this);
 
         // Facebook Login Button Appearance Customization
         float fbIconScale = 1.45F;
@@ -522,8 +523,8 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
         btnFBLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
-                doSigninViaFacebook(loginResult.getAccessToken().getToken());
-                //showToast(loginResult.getAccessToken().getToken(), Toast.LENGTH_LONG);
+                //doSigninViaFacebook(loginResult.getAccessToken().getToken());
+                showToast(loginResult.getAccessToken().getToken(), Toast.LENGTH_LONG);
                 /*GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -589,6 +590,6 @@ public class SignupFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
